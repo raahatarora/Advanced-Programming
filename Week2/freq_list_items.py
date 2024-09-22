@@ -1,27 +1,20 @@
 # To generate a list and find the frequency of each item in the list
 
-def CountFrequency(my_list):
+def count_frequency(lst):
+    frequency = []
     
-    freq = {}
-    for item in my_list:
-        if (item in freq):
-            freq[item] +=1
-        else:
-            freq[item] = 1
-            
-    for key,value in freq.items():
-        print("%d : %d " % (key,value))
-        
+    for item in lst:
+        count = 0
+        for i in range(len(lst)):
+            if lst[i] == item:
+                count += 1
+        frequency.append(count)
+    
+    return frequency
 
-n = int(input("Enter the no of items in the list: \n"))
-lis = []
-i = 0
-print("Enter the items of the list:")
-while i < n:
-    lis_item = lis.append(int(input()))
-    i +=1
-    
-CountFrequency(lis)
-    
-    
-    
+# Example usage
+my_list = [1, 2, 3, 2, 1, 3, 4, 1, 2, 3]
+result = count_frequency(my_list)
+
+print("List:", my_list)
+print("Frequency of each item:", result)
