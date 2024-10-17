@@ -1,0 +1,297 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\fnil\fcharset1 Segoe UI Symbol;}{\f2\fnil\fcharset1 Cambria Math;}{\f3\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}{\*\mmathPr\mmathFont2\mwrapIndent1440 }\viewkind4\uc1 
+\pard\nowidctlpar\sa200\sl276\slmult1\b\f0\fs50\lang9 PIYUSH KUMAR MISHRA\par
+230957212\par
+ROLL N0:70\par
+\b0\fs22\par
+\b\fs42\par
+WEEK 6:\par
+\fs20 Exercise 1:\par
+You are tasked with designing a Library Management System for a local library. The\par
+library has both EBooks (digital format) and Printed Books (physical copies), and the\par
+system should allow members (both students and teachers) to borrow books. The library\par
+also has a librarian who manages the addition and removal of books.\par
+Your system should include the following features:\par
+1. Book Management:\par
+o Books can be either EBooks or Printed Books.\par
+o Each book should have a title, author, and ISBN.\par
+o EBooks should have a file format, while Printed Books should have a page\par
+count.\par
+2. Member Management:\par
+o The library has members who can either be students or teachers.\par
+o Each member has a name and member ID.\par
+o Members should be able to borrow books.\par
+3. Librarian Management:\par
+o A librarian can add or remove books from the library.\par
+o A librarian can be both a student and a teacher.\par
+4. Library Operations:\par
+o The system should allow the librarian to:\par
+\f1\u9642?\f0  Add new books to the library.\par
+\f1\u9642?\f0  Remove books from the library using their ISBN.\par
+\f1\u9642?\f0  Search for books by title or author.\par
+Requirements:\par
+Using Python and Object-Oriented Programming principles, implement the following:\par
+1. Create a class hierarchy to represent books (including EBooks and Printed Books).\par
+2. Create a class hierarchy to represent members (students and teachers).\par
+3. Implement the functionalities for adding, removing, and searching for books.\par
+4. Demonstrate the following types of inheritance:\par
+o Single Inheritance for books.\par
+o Multiple Inheritance for the librarian, who is both a student and a teacher.\par
+o Hierarchical Inheritance for members (students and teachers).\par
+Tasks:\par
+1. Book Management:\par
+o Define a base class Book with attributes for title, author, and ISBN.\par
+o Define a subclass EBook that adds the attribute for file format.\par
+o Define another subclass PrintedBook that adds the attribute for page count.\par
+2. Member and Librarian Management:\par
+o Define a base class Member with attributes for name and member ID.\par
+o Define two subclasses: Student and Teacher, which inherit from Member.\par
+o Create a Librarian class that inherits from both Student and Teacher (multiple\par
+inheritance).\par
+3. Library Class:\par
+o Implement a Library class to manage the collection of books.\par
+o Add methods to the Library class to:\par
+\f1\u9642?\f0  Add new books.\par
+\f1\u9642?\f0  Remove a book by its ISBN.\par
+\f1\u9642?\f0  Search for books by title or author.\par
+4. Demonstration:\par
+o Instantiate a library and add books (both EBooks and Printed Books) to it.\par
+o Demonstrate searching for books using keywords.\par
+o Show how a librarian can add and remove books from the system.\par
+\par
+\b0 class Book:\par
+    def __init__(self, title, author, isbn):\par
+        self.title = title\par
+        self.author = author\par
+        self.isbn = isbn\par
+\par
+class EBook(Book):\par
+    def __init__(self, title, author, isbn, file_format):\par
+        super().__init__(title, author, isbn)\par
+        self.file_format = file_format\par
+\par
+class PrintedBook(Book):\par
+    def __init__(self, title, author, isbn, page_count):\par
+        super().__init__(title, author, isbn)\par
+        self.page_count = page_count\par
+class Member:\par
+    def __init__(self, name, member_id):\par
+        self.name = name\par
+        self.member_id = member_id\par
+\par
+class Student(Member):\par
+    pass\par
+\par
+class Teacher(Member):\par
+    pass\par
+\par
+class Librarian(Student, Teacher):\par
+    pass\par
+class Library:\par
+    def __init__(self):\par
+        self.books = []\par
+\par
+    def add_book(self, book):\par
+        self.books.append(book)\par
+\par
+    def remove_book(self, isbn):\par
+        for book in self.books:\par
+            if book.isbn == isbn:\par
+                self.books.remove(book)\par
+                print(f"Book with ISBN \{isbn\} removed successfully.")\par
+                return\par
+        print(f"Book with ISBN \{isbn\} not found.")\par
+\par
+    def search_book(self, keyword):\par
+        results = []\par
+        for book in self.books:\par
+            if keyword in book.title or keyword in book.author:\par
+                results.append(book)\par
+        return results\par
+def main():\par
+    library = Library()\par
+\par
+    while True:\par
+        print("Library Management System")\par
+        print("1. Add Book")\par
+        print("2. Remove Book")\par
+        print("3. Search Book")\par
+        print("4. Exit")\par
+\par
+        choice = input("Enter your choice: ")\par
+\par
+        if choice == "1":\par
+            title = input("Enter book title: ")\par
+            author = input("Enter book author: ")\par
+            isbn = input("Enter book ISBN: ")\par
+            book_type = input("Enter book type (EBook or PrintedBook): ")\par
+\par
+            if book_type == "EBook":\par
+                file_format = input("Enter file format: ")\par
+                book = EBook(title, author, isbn, file_format)\par
+            elif book_type == "PrintedBook":\par
+                page_count = int(input("Enter page count: "))\par
+                book = PrintedBook(title, author, isbn, page_count)\par
+\par
+            library.add_book(book)\par
+            print("Book added successfully.")\par
+\par
+        elif choice == "2":\par
+            isbn = input("Enter ISBN of book to remove: ")\par
+            library.remove_book(isbn)\par
+\par
+        elif choice == "3":\par
+            keyword = input("Enter keyword to search: ")\par
+            results = library.search_book(keyword)\par
+\par
+            if results:\par
+                print("Search results:")\par
+                for book in results:\par
+                    print(f"Title: \{book.title\}, Author: \{book.author\}, ISBN: \{book.isbn\}")\par
+            else:\par
+                print("No books found.")\par
+\par
+        elif choice == "4":\par
+            break\par
+\par
+        else:\par
+            print("Invalid choice. Please try again.")\par
+\par
+if __name__ == "__main__":\par
+    main()\par
+\par
+\b OUTPUT:\par
+\b0 Library Management System\par
+1. Add Book\par
+2. Remove Book\par
+3. Search Book\par
+4. Exit\par
+Enter your choice:  1\par
+Enter book title:  x\par
+Enter book author:  y\par
+Enter book ISBN:  z\par
+Enter book type (EBook or PrintedBook):  EBook\par
+Enter file format:  pdf\par
+Book added successfully.\par
+Library Management System\par
+1. Add Book\par
+2. Remove Book\par
+3. Search Book\par
+4. Exit\par
+Enter your choice: \par
+\f2\u8593?\u8595?\f0  for history. Search history with c-\f2\u8593?\f0 /c-\f2\u8595?\f0\par
+\b\fs42\lang9\par
+\fs20 Exercise 2: Advanced E-Commerce System Utilizing Polymorphism\par
+A rapidly growing online retail company is looking to upgrade its E-Commerce System.\par
+They need the system to manage various types of products, allow users to add them to their\par
+shopping carts, apply discounts, and handle different payment methods. To make the system\par
+robust, flexible, and scalable, you decide to use Object-Oriented Programming (OOP)\par
+principles.\par
+Objectives:\par
+1. Product Management:\par
+o Products in the system belong to different categories such as Electronics and\par
+Clothing. Each product category has its own discount logic.\par
+o Discounts should be applied based on product types, demonstrating method\par
+overriding.\par
+2. Shopping Cart Management:\par
+o Users should be able to add multiple items to their shopping carts and see the\par
+total cost after discounts.\par
+o The system should allow merging two shopping carts using operator\par
+overloading.\par
+3. Payment Processing:\par
+o Customers should be able to process payments using various methods (e.g.,\par
+credit card, PayPal). Even though Python does not natively support method\par
+overloading, it should be simulated to handle different payment methods\par
+efficiently.\par
+Functional Requirements:\par
+1. Products:\par
+o Implement a base Product class that represents general products, containing\par
+attributes like name and price.\par
+o Create derived classes such as Electronics and Clothing that override the base\par
+class method for calculating product discounts.\par
+2. Shopping Cart:\par
+o Implement a ShoppingCart class that can hold a collection of products.\par
+o Overload the + operator to merge two shopping carts into one.\par
+3. Payment Processing:\par
+o Implement a PaymentProcessor class that simulates method overloading to\par
+handle different payment methods (e.g., credit card and PayPal) using variable\par
+arguments.\par
+\b0 class Product:\par
+    def __init__(self, name, price):\par
+        self.name = name\par
+        self.price = price\par
+\par
+    def calculate_discount(self):\par
+        return self.price * 0.1  # 10% discount as a placeholder\par
+\par
+class Electronics(Product):\par
+    def calculate_discount(self):\par
+        return self.price * 0.15  # 15% discount for Electronics\par
+\par
+class Clothing(Product):\par
+    def calculate_discount(self):\par
+        return self.price * 0.05  # 5% discount for Clothing\par
+class ShoppingCart:\par
+    def __init__(self, products=None):\par
+        self.products = products or []\par
+\par
+    def add_product(self, product):\par
+        self.products.append(product)\par
+\par
+    def calculate_total(self):\par
+        total = sum(product.price for product in self.products)\par
+        discount = sum(product.calculate_discount() for product in self.products)\par
+        return total - discount\par
+\par
+    def __add__(self, other):\par
+        combined_cart = ShoppingCart()\par
+        combined_cart.products = self.products + other.products\par
+        return combined_cart\par
+class PaymentProcessor:\par
+    def process_payment(self, payment_method, *args, **kwargs):\par
+        if payment_method == "credit_card":\par
+            self.process_credit_card_payment(*args, **kwargs)\par
+        elif payment_method == "paypal":\par
+            self.process_paypal_payment(*args, **kwargs)\par
+        else:\par
+            raise ValueError(f"Unsupported payment method: \{payment_method\}")\par
+\par
+    def process_credit_card_payment(self, amount, card_number, expiration_date, cvv):\par
+        # Implement credit card payment processing\par
+        pass\par
+\par
+    def process_paypal_payment(self, amount, paypal_email, paypal_password):\par
+        # Implement PayPal payment processing\par
+        pass\par
+def main():\par
+    electronics = Electronics("Smartphone", 500)\par
+    clothing = Clothing("T-Shirt", 20)\par
+\par
+    cart1 = ShoppingCart()\par
+    cart1.add_product(electronics)\par
+    cart1.add_product(clothing)\par
+\par
+    cart2 = ShoppingCart()\par
+    cart2.add_product(electronics)\par
+\par
+    print("Cart 1 total:", cart1.calculate_total())\par
+    print("Cart 2 total:", cart2.calculate_total())\par
+\par
+    merged_cart = cart1 + cart2\par
+    print("Merged cart total:", merged_cart.calculate_total())\par
+\par
+    payment_processor = PaymentProcessor()\par
+    payment_processor.process_payment("credit_card", 500, "1234567890123456", "123", "2025")\par
+    payment_processor.process_payment("paypal", 500, "john.doe@example.com", "secret_password")\par
+\par
+if __name__ == "__main__":\par
+    main()\par
+\b\par
+OUTPUT:\par
+\b0 Cart 1 total: 444.0\par
+Cart 2 total: 425.0\par
+Merged cart total: 869.0\b\fs42\par
+
+\pard\sa200\sl276\slmult1\b0\f3\fs22\par
+}
+ 

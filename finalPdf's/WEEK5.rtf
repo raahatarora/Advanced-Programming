@@ -1,0 +1,218 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\b\f0\fs50\lang9 PIYUSH KUMAR MISHRA\par
+230957212\par
+ROLL N0:70\par
+\b0\fs22\par
+\b\fs42\par
+WEEK 5:\par
+\fs20 Q1:Exercise 1: Student Grades Management System\par
+Create a simple student grades management system which perform the following functions\par
+(Use a dictionary where the keys are student names, and the values are lists of grades.):\par
+\f1\bullet  Add a student: Add a student's name and their grades for multiple subjects.\par
+\bullet  Update a Grade: Update a specific grade for a student in each subject.\par
+\bullet  Remove a student: Remove a student from the system.\par
+\bullet  Get Average Grade: Calculate and return the average grade for a student across all\par
+subjects.\par
+\bullet  Get Subject Average: Calculate and return the average grade for a specific subject.\par
+\bullet  List All Students: List all students with their average grades for each subject and\par
+overall.\par
+\bullet  Get Highest Grade: Find the highest grade in a specific subject\f0\par
+\b0\par
+class StudentGradesSystem:\par
+    def __init__(self):\par
+        self.students = \{\}\par
+    \par
+    def add_student(self, name, grades):\par
+        self.students[name] = grades\par
+        print(f"Student \{name\} added with grades: \{grades\}")\par
+    \par
+    def update_grade(self, name, subject_index, new_grade):\par
+        if name in self.students:\par
+            if 0 <= subject_index < len(self.students[name]):\par
+                self.students[name][subject_index] = new_grade\par
+                print(f"Grade updated for \{name\} in subject \{subject_index + 1\}: \{new_grade\}")\par
+            else:\par
+                print(f"Subject index \{subject_index\} is invalid.")\par
+        else:\par
+            print(f"Student \{name\} not found.")\par
+    \par
+    def remove_student(self, name):\par
+        if name in self.students:\par
+            del self.students[name]\par
+            print(f"Student \{name\} removed.")\par
+        else:\par
+            print(f"Student \{name\} not found.")\par
+    \par
+    def get_average_grade(self, name):\par
+        if name in self.students:\par
+            grades = self.students[name]\par
+            avg = sum(grades) / len(grades) if grades else 0\par
+            return f"Average grade for \{name\}: \{avg:.2f\}"\par
+        else:\par
+            return f"Student \{name\} not found."\par
+    \par
+    def get_subject_average(self, subject_index):\par
+        total, count = 0, 0\par
+        for grades in self.students.values():\par
+            if 0 <= subject_index < len(grades):\par
+                total += grades[subject_index]\par
+                count += 1\par
+        if count > 0:\par
+            return f"Average grade for subject \{subject_index + 1\}: \{total / count:.2f\}"\par
+        else:\par
+            return f"No data available for subject \{subject_index + 1\}."\par
+    \par
+    def list_all_students(self):\par
+        if self.students:\par
+            for name, grades in self.students.items():\par
+                overall_avg = sum(grades) / len(grades) if grades else 0\par
+                print(f"\{name\}: Grades: \{grades\} | Overall Average: \{overall_avg:.2f\}")\par
+        else:\par
+            print("No students available.")\par
+    \par
+    def get_highest_grade(self, subject_index):\par
+        highest_grade = -1\par
+        highest_student = None\par
+        for name, grades in self.students.items():\par
+            if 0 <= subject_index < len(grades):\par
+                if grades[subject_index] > highest_grade:\par
+                    highest_grade = grades[subject_index]\par
+                    highest_student = name\par
+        if highest_student:\par
+            return f"Highest grade in subject \{subject_index + 1\}: \{highest_grade\} by \{highest_student\}"\par
+        else:\par
+            return f"No data available for subject \{subject_index + 1\}."\par
+\par
+system = StudentGradesSystem()\par
+system.add_student("Alice", [85, 90, 78])\par
+system.add_student("Bob", [88, 76, 92])\par
+system.add_student("Charlie", [95, 85, 80])\par
+\par
+system.update_grade("Alice", 1, 95)\par
+system.remove_student("Bob")\par
+print(system.get_average_grade("Alice"))\par
+print(system.get_subject_average(1))\par
+system.list_all_students()\par
+print(system.get_highest_grade(2))\par
+\par
+\b OUTPUT:\par
+\b0 Student Alice added with grades: [85, 90, 78]\par
+Student Bob added with grades: [88, 76, 92]\par
+Student Charlie added with grades: [95, 85, 80]\par
+Grade updated for Alice in subject 2: 95\par
+Student Bob removed.\par
+Average grade for Alice: 86.00\par
+Average grade for subject 2: 90.00\par
+Alice: Grades: [85, 95, 78] | Overall Average: 86.00\par
+Charlie: Grades: [95, 85, 80] | Overall Average: 86.67\par
+Highest grade in subject 3: 80 by Charlie\par
+\par
+\b Q2)Exercise 2: Employee Management System\par
+Implement Employee Management System using nested dictionaries and lists and\par
+implement following functions to handle different operations.\par
+\f1\bullet  add_employee(): Adds a new employee or updates an existing employee's details.\par
+\bullet  update_salary(): Updates the salary of an existing employee.\par
+\bullet  add_performance_score(): Adds a performance score to an employee's record.\par
+\bullet  remove_employee(): Removes an employee from the records.\par
+\bullet  get_average_salary_by_department(): Computes the average salary of employees\par
+in a specified department.\par
+\bullet  get_employee_with_highest_performance(): Finds the employee with the highest\par
+average performance score.\par
+\bullet  list_employees_by_department(): Lists all employees in a specified department.\par
+\par
+\b0\f0 class EmployeeManagementSystem:\par
+    def __init__(self):\par
+        self.employees = \{\}\par
+    \par
+    def add_employee(self, employee_id, name, department, salary, performance_scores=None):\par
+        if performance_scores is None:\par
+            performance_scores = []\par
+        self.employees[employee_id] = \{\par
+            "name": name,\par
+            "department": department,\par
+            "salary": salary,\par
+            "performance_scores": performance_scores\par
+        \}\par
+        print(f"Employee \{name\} added/updated.")\par
+    \par
+    def update_salary(self, employee_id, new_salary):\par
+        if employee_id in self.employees:\par
+            self.employees[employee_id]['salary'] = new_salary\par
+            print(f"Salary updated for \{self.employees[employee_id]['name']\}: \{new_salary\}")\par
+        else:\par
+            print(f"Employee \{employee_id\} not found.")\par
+    \par
+    def add_performance_score(self, employee_id, score):\par
+        if employee_id in self.employees:\par
+            self.employees[employee_id]['performance_scores'].append(score)\par
+            print(f"Performance score \{score\} added for \{self.employees[employee_id]['name']\}.")\par
+        else:\par
+            print(f"Employee \{employee_id\} not found.")\par
+    \par
+    def remove_employee(self, employee_id):\par
+        if employee_id in self.employees:\par
+            print(f"Employee \{self.employees[employee_id]['name']\} removed.")\par
+            del self.employees[employee_id]\par
+        else:\par
+            print(f"Employee \{employee_id\} not found.")\par
+    \par
+    def get_average_salary_by_department(self, department):\par
+        total_salary, count = 0, 0\par
+        for employee in self.employees.values():\par
+            if employee['department'] == department:\par
+                total_salary += employee['salary']\par
+                count += 1\par
+        if count > 0:\par
+            return f"Average salary in \{department\}: \{total_salary / count:.2f\}"\par
+        else:\par
+            return f"No employees found in \{department\}."\par
+    \par
+    def get_employee_with_highest_performance(self):\par
+        highest_avg = -1\par
+        top_employee = None\par
+        for employee_id, employee in self.employees.items():\par
+            scores = employee['performance_scores']\par
+            if scores:\par
+                avg_score = sum(scores) / len(scores)\par
+                if avg_score > highest_avg:\par
+                    highest_avg = avg_score\par
+                    top_employee = employee\par
+        if top_employee:\par
+            return f"Employee with highest performance: \{top_employee['name']\} with average score \{highest_avg:.2f\}"\par
+        else:\par
+            return "No performance scores available."\par
+    \par
+    def list_employees_by_department(self, department):\par
+        employees_in_dept = [emp['name'] for emp in self.employees.values() if emp['department'] == department]\par
+        if employees_in_dept:\par
+            print(f"Employees in \{department\}: \{', '.join(employees_in_dept)\}")\par
+        else:\par
+            print(f"No employees found in \{department\}.")\par
+\par
+system = EmployeeManagementSystem()\par
+system.add_employee(1, "Alice", "HR", 50000, [4.5, 4.7])\par
+system.add_employee(2, "Bob", "IT", 60000, [4.0, 3.8])\par
+system.add_employee(3, "Charlie", "HR", 55000, [4.8, 4.9])\par
+\par
+system.update_salary(2, 65000)\par
+system.add_performance_score(1, 4.6)\par
+system.remove_employee(3)\par
+\par
+print(system.get_average_salary_by_department("HR"))\par
+print(system.get_employee_with_highest_performance())\par
+system.list_employees_by_department("IT")\par
+\par
+\b OUTPUT:\par
+\b0 Student Alice added with grades: [85, 90, 78]\par
+Student Bob added with grades: [88, 76, 92]\par
+Student Charlie added with grades: [95, 85, 80]\par
+Grade updated for Alice in subject 2: 95\par
+Student Bob removed.\par
+Average grade for Alice: 86.00\par
+Average grade for subject 2: 90.00\par
+Alice: Grades: [85, 95, 78] | Overall Average: 86.00\par
+Charlie: Grades: [95, 85, 80] | Overall Average: 86.67\par
+Highest grade in subject 3: 80 by Charlie\b\par
+}
+ 
